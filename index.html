@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Dados</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            position: relative; /* Para centralizar o número */
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            background-color: #fff;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            animation: fadeIn 1.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #222;
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #666;
+        }
+
+        button {
+            margin: 10px;
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            background-color: #ff5e57;
+            color: white;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background-color: #e14e48;
+            transform: translateY(-5px);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .number-display {
+            font-size: 96px; /* Tamanho grande para o número */
+            font-weight: bold;
+            color: #0072ff;
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            position: absolute;
+            top: 50%; /* Centraliza verticalmente */
+            left: 50%; /* Centraliza horizontalmente */
+            transform: translate(-50%, -50%); /* Ajusta a posição para o centro */
+        }
+
+        input[type="number"], input[type="range"] {
+            width: 70px;
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        img {
+            height: 40px;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        img:hover {
+            transform: rotate(360deg);
+        }
+
+        @media (max-width: 500px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            button {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+
+            #result {
+                font-size: 20px;
+            }
+
+            img {
+                height: 30px;
+            }
+
+            .number-display {
+                font-size: 48px; /* Tamanho menor em telas pequenas */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Jogo de Dados</h1>
+        <p>Escolha um dado, quantos dados rolar e o bônus para adicionar ao resultado:</p>
+
+        <div>
+            <label for="diceNumber">Número de dados:</label>
+            <input type="number" id="diceNumber" value="1" min="1" aria-label="Número de dados">
+        </div>
+
+        <div>
+            <button aria-label="Rolar D4" onclick="rollDice(4)">
+                <img src="https://rpgmaisbarato.com/assets/upload/produtos/072024/95690_dado-d4-avulso-branco_66887a4eba75a.jpg" alt="D4">
+                Rolar D4
+            </button>
+            <button aria-label="Rolar D6" onclick="rollDice(6)">
+                <img src="https://rpgmaisbarato.com/assets/upload/produtos/102018/95693_dado-d6-avulso-preto_5bbe86faa2a54.jpg" alt="D6">
+                Rolar D6
+            </button>
+            <button aria-label="Rolar D8" onclick="rollDice(8)">
+                <img src="https://rpgmaisbarato.com/assets/upload/produtos/102018/95692_dado-d8-avulso-preto_5bbe6c0d04722.jpg" alt="D8">
+                Rolar D8
+            </button>
+            <button aria-label="Rolar D10" onclick="rollDice(10)">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_786551-MLB52476849029_112022-O.webp" alt="D10">
+                Rolar D10
+            </button>
+            <button aria-label="Rolar D12" onclick="rollDice(12)">
+                <img src="https://rpgmaisbarato.com/assets/upload/produtos/072024/97001_dado-de-rpg-d12-avulso-vermelho-1-unidade_668df353570ab.jpg" alt="D12">
+                Rolar D12
+            </button>
+            <button aria-label="Rolar D20" onclick="rollDice(20)">
+                <img src="https://rpgmaisbarato.com/assets/upload/produtos/022020/96114_dado-d20-jumbo-preto_5e4336b761186.jpg" alt="D20">
+                Rolar D20
+            </button>
+            <button aria-label="Rolar D100" onclick="rollDice(100)">
+                <img src="https://rpgmaisbarato.com/assets/upload/produtos/012021/96311_dado-d100-branco_5ff09d3571720.jpg" alt="D100">
+                Rolar D100
+            </button>
+        </div>
+
+        <div>
+            <label for="bonus">Bônus:</label>
+            <input type="number" id="bonus" value="0" min="0" aria-label="Bônus">
+        </div>
+
+        <div id="result">Resultado: </div>
+        <div id="numberDisplay" class="number-display"></div>
+        
+        <audio id="backgroundMusic" loop>
+            <source src="bam.mp3" type="audio/mpeg">
+            Seu navegador não suporta a tag de áudio.
+        </audio>
+
+        <audio id="rollSound">
+            <source src="somzi.mp3" type="audio/mpeg">
+            Seu navegador não suporta a tag de áudio.
+        </audio>
+
+        <button id="playButton" onclick="toggleAudio()" aria-label="Reproduzir/Pausar Música">Reproduzir/Pausar Música</button>
+        <div>
+            <label for="volumeControl">Volume:</label>
+            <input type="range" id="volumeControl" min="0" max="100" value="100" aria-label="Controle de volume" onchange="changeVolume()">
+        </div>
+        <div id="volumeStatus">Volume: 100%</div>
+    </div>
+
+    <script>
+        const audio = document.getElementById('backgroundMusic');
+        const rollSound = document.getElementById('rollSound');
+        let isPlaying = false;
+
+        function rollDice(sides) {
+            const diceNumber = Math.max(1, parseInt(document.getElementById('diceNumber').value) || 1);
+            const bonus = Math.max(0, parseInt(document.getElementById('bonus').value) || 0);
+            let totalResult = 0;
+            let rollResults = [];
+            let lastRoll = 0;
+
+            for (let i = 0; i < diceNumber; i++) {
+                const result = Math.floor(Math.random() * sides) + 1;
+                rollResults.push(result);
+                totalResult += result;
+                lastRoll = result; // Armazena o último número rolado
+            }
+
+            totalResult += bonus;
+
+            document.getElementById('result').textContent = 'Resultado: ' + totalResult + ' (Rolagens: ' + rollResults.join(', ') + ' + Bônus: ' + bonus + ')';
+            showRollNumber(lastRoll); // Mostra o último número rolado
+            rollSound.play(); // Toca o som do dado rolado
+        }
+
+        function showRollNumber(number) {
+            const numberDisplay = document.getElementById('numberDisplay');
+            numberDisplay.textContent = number; // Atualiza o texto com o número rolado
+            numberDisplay.style.opacity = '1'; // Torna o número visível
+            numberDisplay.style.transform = 'scale(1.5)'; // Aumenta o tamanho do número
+            setTimeout(() => {
+                numberDisplay.style.opacity = '0'; // Torna o número invisível novamente
+                numberDisplay.style.transform = 'scale(1)'; // Retorna ao tamanho original
+            }, 1500); // Mantém visível por 1,5 segundos
+        }
+
+        function toggleAudio() {
+            if (isPlaying) {
+                audio.pause();
+            } else {
+                audio.play();
+            }
+            isPlaying = !isPlaying;
+        }
+
+        function changeVolume() {
+            const volumeControl = document.getElementById('volumeControl');
+            audio.volume = volumeControl.value / 100; // Ajusta o volume do áudio
+            document.getElementById('volumeStatus').textContent = 'Volume: ' + volumeControl.value + '%'; // Atualiza o status de volume
+        }
+    </script>
+</body>
+</html>
